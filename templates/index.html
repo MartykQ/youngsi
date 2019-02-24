@@ -1,0 +1,85 @@
+<html>
+    <head>
+            <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+            <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='animate.css') }}">
+            <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:300&amp;subset=latin-ext" rel="stylesheet">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+
+
+    <body>
+
+            <div id="top">         
+                    <a href="/"> <img src="{{ url_for('static', filename='top-icon.png') }}" alt="logo" /></a>
+                <a href="/about" class="about">about</a>
+                </div>
+
+        <div id = "wrapper">
+            
+     
+
+            <div class="logo-tekst">
+               <h1 class="animated pulse">młody SI</h1>
+            </div>
+            
+            <div class="logo-autor animated slideInLeft">
+                by martykq
+            </div>
+
+            <div id="form-box">
+
+                <div class="box">
+                    <div class="opis">Liczba słów bazowych:</div>
+
+                    <form class="first-form" method="POST" action="/">
+                        <input type="radio" name="order" value="1" >1
+                        <input type="radio" name="order" value="2" checked> 2
+
+                </div>
+
+                <div class="box"> 
+                    <div class="opis">Liczba zwrotek:</div>
+
+
+                            <select name="zwrotki">
+                                <option>1</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                            </select>           
+
+                </div>
+                
+                <div class="box">
+                        <div class="opis">Liczba wersów(refren)</div>
+
+                                <select name="wersy">
+                                    <option>4</option>
+                                    <option>5</option>
+                                    <option>6</option>                      
+                                </select>     
+
+                </div>
+
+            <button class="but animated bounceInUp" type="submit" value="submit">Generuj!</button>
+            </form>
+        </div>
+
+        <div class="opis-short">
+                <p>
+                młody SI to aplikacja stworzona w języku Python, która na podstawie 
+                ~11 000 wersów prawdziwych utworów generuje nowy, unikalny tekst.
+                </p>
+        </div>
+
+        <div class="avatar">
+                <img src="{{ url_for('static', filename='avatar.png') }}" />
+        </div>
+
+
+
+
+    </body>
+
+
+</html>
