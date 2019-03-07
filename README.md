@@ -2,7 +2,7 @@
 
 <img src="./images/avatar.png" alt="drawing" width="200"/>
 
-[YOUNGSI.PL](www.youngsi.pl)
+# www.youngsi.pl
 
 
 
