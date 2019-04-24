@@ -22,3 +22,10 @@ YoungSI/MłodySI is a simple python app, that generates random polish-rap lyrics
 ## RHYMES
 
 All rhymes were previously found by me, with the simpliest algorithm which compares last characters of the words. They are stored in rhymes.json 
+
+
+## TODO
+  word2vec algorithm
+  NLP skip-grams
+  
+  
