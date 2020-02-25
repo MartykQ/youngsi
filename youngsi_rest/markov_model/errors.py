@@ -6,3 +6,7 @@ class YoungException(Exception):
 
 class TokenNotFound(YoungException):
     pass
+
+
+class RhymeNotFound(YoungException):
+    pass

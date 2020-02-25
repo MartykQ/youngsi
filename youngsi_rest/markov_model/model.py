@@ -1,6 +1,6 @@
 from collections import defaultdict
-from youngsi_rest.helpers import pick_by_weight, get_unique_words
-from youngsi_rest.markov_model.errors import TokenNotFound
+from youngsi_rest.helpers import pick_by_weight, get_unique_words, does_rhyme, reverse_lines
+from youngsi_rest.markov_model.errors import TokenNotFound, RhymeNotFound
 
 BEGIN = '__BEGIN__'
 END = '__END__'
@@ -12,7 +12,6 @@ class MarkovModel:
         self.n_base = n
         self._corpus = corpus
         self._model = defaultdict(dict)
-        self._rhymes = defaultdict(set)
 
     def _prepare_sentence(self, sentence: str) -> list:
         return [*[BEGIN] * self.n_base, *sentence.split(), *[END] * self.n_base]
@@ -31,16 +30,32 @@ class MarkovModel:
             raise TokenNotFound("Token was not present in the corpus")
         return pick_by_weight(choices)
 
-    def _fit_rhymes(self):
-        self._corpus.seek(0)
+    def fit_rhymes(self) -> defaultdict:
+        found_rhymes = defaultdict(set)
         unique_words = get_unique_words(self._corpus)
+        for word in unique_words:
+            for potential_rhyme in unique_words:
+                if does_rhyme(word, potential_rhyme):
+                    found_rhymes[word].add(potential_rhyme)
+
+        return found_rhymes
 
 
 class SongWriter:
 
-    def __init__(self, forward_model, backward_model):
+    def __init__(self, forward_model, backward_model, rhymes):
         self._forward_model = forward_model
         self._backward_model = backward_model
+        self._rhymes = rhymes
+
+    def _get_rhyming_word(self, word):
+        choices = self._rhymes[word]
+        if not choices:
+            raise RhymeNotFound
+
+        rhymes_distribution = {}
+
+        for
 
     def write_sentence_forward(self, first_word=None):
         pass
@@ -58,7 +73,23 @@ class SongWriter:
         sentence = Sentence()
 
         if not first_word:
+            pass
 
+    @classmethod
+    def create_raper(cls, text_corpus_path, n_base):
+
+        corpus = open(text_corpus_path, 'r', encoding='utf-8')
+        forward_model = MarkovModel(corpus, n_base)
+        forward_model.fit_model()
+
+        corpus.seek(0)
+        rhymes = forward_model.fit_rhymes()
+
+        corpus = open(text_corpus_path, 'r', encoding='utf-8')
+        backward_model = MarkovModel(reverse_lines(corpus), n_base)
+        backward_model.fit_model()
+
+        return cls(forward_model, backward_model, rhymes)
 
 
 class Sentence:

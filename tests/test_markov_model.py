@@ -35,6 +35,12 @@ class TestMarkovModel(unittest.TestCase):
         with self.assertRaises(TokenNotFound):
             model.get_next_token(('asdasdas12312asdd12asd', ))
 
+    def test_fit_rhymes(self):
+        self.corpus.seek(0)
+        model = MarkovModel(self.corpus, 1)
+        model._fit_rhymes()
+        print(model._rhymes)
+
 
 if __name__ == '__main__':
     unittest.main()
