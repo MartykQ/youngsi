@@ -70,13 +70,17 @@ class SongWriter:
 
         return pick_by_weight(rhymes_distribution)
 
-    def write_sentence_forward(self, first_word=None):
-        pass
+    def write_sentence(self, mode, first_word=None, max_tries=10, max_words=11):
 
-    def write_sentence_backward(self, first_word=None):
-        pass
+        possible_sentences = []
+        for i in range(max_tries):
+            new_sentence = self._generate_sentence(mode=mode, first_word=first_word, max_words=max_words)
+            possible_sentences.append(new_sentence)
 
-    def _generate_sentence(self, mode='forward', first_word=None, max_tries=30):
+        distribution = {k: len(k) for k in possible_sentences}
+        return pick_by_weight(distribution)
+
+    def _generate_sentence(self, mode='forward', first_word=None, max_words=15):
         models = {
             'forward': self._forward_model,
             'backward': self._backward_model
@@ -84,7 +88,8 @@ class SongWriter:
         model = models[mode]
         sentence = Sentence()
 
-        # TODO appending BEGIN
+        for _ in range(self.n_base):
+            sentence.append(BEGIN)
 
         if not first_word:
             # If first word not privided chose random word from the model
@@ -93,7 +98,7 @@ class SongWriter:
         else:
             sentence.append(first_word)
 
-        for i in range(max_tries):
+        for i in range(max_words):
             token = sentence.get_last_n(self.n_base)
             try:
                 next_token = model.get_next_token(token)
@@ -106,10 +111,48 @@ class SongWriter:
 
             sentence.append(next_token)
             if END in next_token:
-                return sentence
+                break
 
-        sentence.append(END)
+        sentence = sentence.clear()
+        if mode == 'backward':
+            return sentence.revert()
         return sentence
+
+    def write_a_song(self):
+        # generate chorus
+        pass
+
+    def _generate_rhyming_lines(self, num_lines, max_tries=50):
+
+        rhyme = None
+        for _ in range(max_tries):
+            try:
+                first_line = self.write_sentence(mode='forward')
+                rhyme = self._get_rhyming_word(first_line.get_last_n(1)[0])
+                break
+            except RhymeNotFound:
+                pass
+
+        if not rhyme:
+            raise RhymeNotFound
+
+        lines = [first_line, ]
+
+        for i in range(num_lines):
+            next_sentence = self.write_sentence(mode='backward', first_word=rhyme)
+            try:
+                rhyme = self._get_rhyming_word(next_sentence.get_last_n(1))
+            except RhymeNotFound:
+                rhyme = None
+            lines.append(next_sentence)
+
+        return lines
+
+
+    def _generate_chorus(self, chorus_lines=6):
+        chorus = []
+        for i in range(chorus_lines):
+            pass
 
     @classmethod
     def create_raper(cls, text_corpus_path, n_base):
@@ -130,8 +173,8 @@ class SongWriter:
 
 class Sentence:
 
-    def __init__(self, first_word=None):
-        self.words = [first_word]
+    def __init__(self):
+        self.words = []
 
     def append(self, word):
         self.words.append(word)
@@ -139,5 +182,21 @@ class Sentence:
     def get_last_n(self, n):
         return tuple(self.words[-n::])
 
+    def revert(self):
+        self.words.reverse()
+        return self
+
+    def clear(self):
+        self.words = [word for word in self.words if word != BEGIN and word != END]
+        return self
+
+    def __str__(self):
+        return str(self.words)
+
+    def __len__(self):
+        return len(self.words)
+
+    def __repr__(self):
+        return repr(self.words)
 
 

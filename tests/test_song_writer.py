@@ -17,6 +17,9 @@ class TestSongWriter(unittest.TestCase):
         print(self.song_writer._backward_model._model)
         print(self.song_writer._get_rhyming_word('wszedlem'))
 
+    def test_generate_sentence(self):
+        print(self.song_writer._generate_rhyming_lines(num_lines=7))
+
 
 if __name__ == '__main__':
     unittest.main()
