@@ -15,6 +15,7 @@ class TestSongWriter(unittest.TestCase):
         print(self.song_writer._rhymes)
         print(self.song_writer._forward_model._model)
         print(self.song_writer._backward_model._model)
+        print(self.song_writer._get_rhyming_word('wszedlem'))
 
 
 if __name__ == '__main__':

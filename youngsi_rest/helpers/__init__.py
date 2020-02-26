@@ -36,5 +36,20 @@ def reverse_lines(text_file):
         yield ' '.join(reversed(line.split()))
 
 
+def count_syllabels():
+    # TODO is it possible?
+    NotImplementedError
+
+
+def rate_rhyme(word, rhyme):
+    return len(rhyme)
+
+
 if __name__ == '__main__':
-    print(does_rhyme('kot', 'płot'))
+
+    print(rate_rhyme('kot', 'płot'))
+    print(rate_rhyme('kot', 'kot'))
+    print(rate_rhyme('kot', 'samolott'))
+
+    print(rate_rhyme('samolot', 'kot'))
+    print(rate_rhyme('kaszolot', 'samolot'))

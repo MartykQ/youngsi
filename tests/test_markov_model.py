@@ -10,6 +10,7 @@ class TestMarkovModel(unittest.TestCase):
         self.markov_2 = MarkovModel(self.corpus, 2)
         self.markov_1 = MarkovModel(self.corpus, 1)
 
+
     def tearDown(self) -> None:
         pass
 
@@ -26,6 +27,10 @@ class TestMarkovModel(unittest.TestCase):
 
         print(self.markov_1._model)
         print(self.markov_2._model)
+        print(self.markov_1.get_random_token())
+        print(self.markov_2.get_random_token())
+        print(self.markov_2.get_random_start_token())
+        print(self.markov_1.get_random_start_token())
 
     def test_get_next_token(self):
         self.corpus.seek(0)
@@ -35,11 +40,6 @@ class TestMarkovModel(unittest.TestCase):
         with self.assertRaises(TokenNotFound):
             model.get_next_token(('asdasdas12312asdd12asd', ))
 
-    def test_fit_rhymes(self):
-        self.corpus.seek(0)
-        model = MarkovModel(self.corpus, 1)
-        model._fit_rhymes()
-        print(model._rhymes)
 
 
 if __name__ == '__main__':
