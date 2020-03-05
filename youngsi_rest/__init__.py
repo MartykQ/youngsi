@@ -3,8 +3,14 @@ from youngsi_rest.markov_model.model import SongWriter
 from flask_cors import CORS
 import os
 
-model_n1 = SongWriter.load_raper(r'data\youngsi_n1.pkl')
-model_n2 = SongWriter.load_raper(r'data\youngsi_n2.pkl')
+THIS_FOLDER = os.path.dirname(os.path.abspath(__file__))
+
+path_n1 = os.path.join(THIS_FOLDER, 'data', 'youngsi_n1.pkl')
+path_n2 = os.path.join(THIS_FOLDER, 'data', 'youngsi_n2.pkl')
+
+
+model_n1 = SongWriter.load_raper(path_n1)
+model_n2 = SongWriter.load_raper(path_n2)
 app = Flask(__name__)
 CORS(app)
 app.config['JSON_AS_ASCII'] = False
