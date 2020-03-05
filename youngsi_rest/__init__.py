@@ -5,8 +5,8 @@ import os
 
 THIS_FOLDER = os.path.dirname(os.path.abspath(__file__))
 
-path_n1 = os.path.join(THIS_FOLDER, 'data', 'youngsi_n1.pkl')
-path_n2 = os.path.join(THIS_FOLDER, 'data', 'youngsi_n2.pkl')
+path_n1 = os.path.join(THIS_FOLDER, '..', 'data', 'youngsi_n1.pkl')
+path_n2 = os.path.join(THIS_FOLDER, '..', 'data', 'youngsi_n2.pkl')
 
 
 model_n1 = SongWriter.load_raper(path_n1)
