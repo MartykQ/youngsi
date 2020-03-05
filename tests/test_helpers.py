@@ -6,7 +6,12 @@ class TestHelpers(unittest.TestCase):
 
     def test_pick_by_weight(self):
         d = {'a': 1, 'b': 2}
-        result = pick_by_weight(d)
+        results = []
+        for i in range(100):
+            result = pick_by_weight(d)
+            results.append(result)
+
+        self.assertGreater(results.count('b'), results.count('a'))
 
     def test_unique_words(self):
         corpus = open('test_corpus.txt', 'r', encoding='utf-8')
@@ -27,7 +32,6 @@ class TestHelpers(unittest.TestCase):
         self.assertEqual(does_rhyme('ot', ''), False)
         self.assertEqual(does_rhyme('asdasd', ''), False)
         self.assertEqual(does_rhyme('kot', 'kotek'), False)
-
 
 
 if __name__ == '__main__':

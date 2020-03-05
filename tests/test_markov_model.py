@@ -1,7 +1,7 @@
 import unittest
 from youngsi_rest.markov_model.model import MarkovModel
 from youngsi_rest.markov_model.errors import TokenNotFound
-
+from youngsi_rest.markov_model.model import SongWriter
 
 class TestMarkovModel(unittest.TestCase):
 
@@ -9,7 +9,6 @@ class TestMarkovModel(unittest.TestCase):
         self.corpus = open('test_corpus.txt', 'r', encoding='utf-8')
         self.markov_2 = MarkovModel(self.corpus, 2)
         self.markov_1 = MarkovModel(self.corpus, 1)
-
 
     def tearDown(self) -> None:
         pass
@@ -20,17 +19,17 @@ class TestMarkovModel(unittest.TestCase):
         self.assertEqual(result_1, ['__BEGIN__', 'koza', 'z', 'bobra', '__END__'])
         self.assertEqual(result_2, ['__BEGIN__', '__BEGIN__', 'koza', 'z', 'bobra', '__END__', '__END__'])
 
-    def test_fit_model(self):
-        self.markov_1.fit_model()
-        self.corpus.seek(0)
-        self.markov_2.fit_model()
-
-        print(self.markov_1._model)
-        print(self.markov_2._model)
-        print(self.markov_1.get_random_token())
-        print(self.markov_2.get_random_token())
-        print(self.markov_2.get_random_start_token())
-        print(self.markov_1.get_random_start_token())
+    # def test_fit_model(self):
+    #     self.markov_1.fit_model()
+    #     self.corpus.seek(0)
+    #     self.markov_2.fit_model()
+    #
+    #     print(self.markov_1._model)
+    #     print(self.markov_2._model)
+    #     print(self.markov_1.get_random_token())
+    #     print(self.markov_2.get_random_token())
+    #     print(self.markov_2.get_random_start_token())
+    #     print(self.markov_1.get_random_start_token())
 
     def test_get_next_token(self):
         self.corpus.seek(0)
@@ -38,7 +37,7 @@ class TestMarkovModel(unittest.TestCase):
         model.fit_model()
         self.assertEqual(model.get_next_token(('test001', )), '__t001__')
         with self.assertRaises(TokenNotFound):
-            model.get_next_token(('asdasdas12312asdd12asd', ))
+            model.get_next_token(('skurwie12312312132l', ))
 
 
 
