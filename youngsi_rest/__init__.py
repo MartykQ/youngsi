@@ -39,10 +39,7 @@ def return_a_song():
 def response_chat():
     data = request.get_json()
     mes = data['message']
-    try:
-        response = model_n1.get_message_response(mes)
-    except Exception:
-        response = "hi"
+    response = model_n1.get_message_response(mes)
     return jsonify({
         'mes': str(response)
     })

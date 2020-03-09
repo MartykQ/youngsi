@@ -75,7 +75,7 @@ class SongWriter:
         choices = []
         for last_n in reversed(range(2, 6)):
             key = word[-last_n:]
-            if self._rhymes[key]:
+            if self._rhymes.get(key):
                 choices.extend({random.choice(self._rhymes[key]) for w in range(last_n)})
 
         if choices:
@@ -166,12 +166,15 @@ class SongWriter:
         return lines
 
     def get_message_response(self, mes):
-
+        print(f"Message: {mes}")
         mes = clear_message(mes)
         last_word = mes.split()[-1]
+        print(f"last: {last_word}")
         try:
             rhyme = self._get_rhyming_word(last_word)
+            print(rhyme)
         except RhymeNotFound:
+            print("error")
             return "Hello"
 
         response = self.write_sentence(mode='backward', first_word=rhyme)
