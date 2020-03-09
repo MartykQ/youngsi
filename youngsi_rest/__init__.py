@@ -33,3 +33,10 @@ def return_a_song():
     return jsonify({
         'lyrics': song_string
     })
+
+
+@app.route('/api/chat', methods=['GET'])
+def response_chat():
+    return jsonify({
+        'mes': 'siema mordo'
+    })
