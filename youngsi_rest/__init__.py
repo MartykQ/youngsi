@@ -25,13 +25,8 @@ def return_a_song():
     else:
         song = model_n2.sing_a_song()
 
-    song_string = ""
-    for segment in song:
-        for sentence in segment:
-            song_string = f"{song_string}\n {sentence} "
-
     return jsonify({
-        'lyrics': song_string
+        'lyrics': song
     })
 
 

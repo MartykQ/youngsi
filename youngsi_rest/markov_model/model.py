@@ -183,17 +183,20 @@ class SongWriter:
     def sing_a_song(self, num_verse=3, num_chorus_lines=6):
 
         chorus = self._generate_rhyming_lines(num_chorus_lines)
+        chorus = [str(sen) for sen in chorus]
+        chorus = {"title": "Refren", "text": chorus}
         song = [chorus, ]
         for i in range(num_verse):
-            verse_a = self._generate_rhyming_lines(4)
-            verse_b = self._generate_rhyming_lines(4)
-            verse = list(itertools.chain.from_iterable((zip(verse_a, verse_b))))
-            song.append(verse)
+            # verse_a = self._generate_rhyming_lines(8)
+            # verse_b = self._generate_rhyming_lines(4)
+            # verse = list(itertools.chain.from_iterable((zip(verse_a, verse_b))))
+            verse = self._generate_rhyming_lines(8)
+            verse = [str(sen) for sen in verse]
+            song.append({"title": f"Zwrotka {i+1}", "text": verse})
             song.append(chorus)
 
         for segment in song:
-            print("_________")
-            for line in segment:
+            for line in segment["text"]:
                 print(line)
 
         return song
