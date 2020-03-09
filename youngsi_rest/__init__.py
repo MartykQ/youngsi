@@ -44,5 +44,5 @@ def response_chat():
     except Exception:
         response = "hi"
     return jsonify({
-        'mes': response
+        'mes': str(response)
     })
