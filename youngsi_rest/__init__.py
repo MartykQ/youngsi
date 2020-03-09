@@ -35,8 +35,14 @@ def return_a_song():
     })
 
 
-@app.route('/api/chat', methods=['GET'])
+@app.route('/api/chat', methods=['POST'])
 def response_chat():
+    data = request.get_json()
+    mes = data['message']
+    try:
+        response = model_n1.get_message_response(mes)
+    except Exception:
+        response = "hi"
     return jsonify({
-        'mes': 'siema mordo'
+        'mes': response
     })

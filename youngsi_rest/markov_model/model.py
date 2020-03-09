@@ -3,7 +3,8 @@ import pickle
 import random
 from collections import defaultdict
 
-from youngsi_rest.helpers import pick_by_weight, get_unique_words, reverse_lines, calculate_dict_probability
+from youngsi_rest.helpers import pick_by_weight, get_unique_words, reverse_lines, calculate_dict_probability, \
+    clear_message
 from youngsi_rest.markov_model.errors import TokenNotFound, RhymeNotFound
 
 BEGIN = '__BEGIN__'
@@ -164,6 +165,18 @@ class SongWriter:
 
         return lines
 
+    def get_message_response(self, mes):
+
+        mes = clear_message(mes)
+        last_word = mes.split()[-1]
+        try:
+            rhyme = self._get_rhyming_word(last_word)
+        except RhymeNotFound:
+            return "Hello"
+
+        response = self.write_sentence(mode='backward', first_word=rhyme)
+        return response
+
     def sing_a_song(self, num_verse=3, num_chorus_lines=6):
 
         chorus = self._generate_rhyming_lines(num_chorus_lines)
@@ -257,9 +270,6 @@ class Sentence:
 
 
 if __name__ == '__main__':
-    n1 = SongWriter.create_raper(text_corpus_path=r'D:\DATA\Projects\youngsi\corpus.txt', n_base=1)
-    n2 = SongWriter.create_raper(text_corpus_path=r'D:\DATA\Projects\youngsi\corpus.txt', n_base=2)
-
-    n1.save_raper(r'D:\DATA\Projects\youngsi\data\youngsi_n1.pkl')
-    n2.save_raper(r'D:\DATA\Projects\youngsi\data\youngsi_n2.pkl')
-
+    model_n2 = SongWriter.load_raper(r'D:\DATA\Projects\youngsi\data\youngsi_n1.pkl')
+    sen = "Gruby to huj"
+    print(model_n2.get_message_response(sen))

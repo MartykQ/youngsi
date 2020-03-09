@@ -86,11 +86,11 @@ def calculate_dict_probability(dict):
     return newDict
 
 
+def clear_message(mes: str):
+    delete_chars = ['?', '.', ',', '!', '$', ';']
+    for char in delete_chars:
+        mes = mes.replace(char, '')
+    return mes
+
 if __name__ == '__main__':
-
-    print(rate_rhyme('kot', 'płot'))
-    print(rate_rhyme('kot', 'kot'))
-    print(rate_rhyme('kot', 'samolott'))
-
-    print(rate_rhyme('samolot', 'kot'))
-    print(rate_rhyme('kaszolot', 'samolot'))
+    pass
