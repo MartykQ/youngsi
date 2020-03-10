@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template
 from youngsi_rest.markov_model.model import SongWriter
 from flask_cors import CORS
 import os
@@ -38,3 +38,8 @@ def response_chat():
     return jsonify({
         'mes': str(response)
     })
+
+
+@app.route('/privacy')
+def privacy():
+    return render_template('privacy_policy.html')
