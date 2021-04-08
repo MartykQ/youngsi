@@ -277,5 +277,5 @@ class Sentence:
 
 if __name__ == '__main__':
     model_n2 = SongWriter.load_raper(r'D:\DATA\Projects\youngsi\data\youngsi_n1.pkl')
-    sen = "Gruby to huj"
+    sen = "test"
     print(model_n2.get_message_response(sen))
